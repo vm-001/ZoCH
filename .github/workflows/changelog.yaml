@@ -36,7 +36,7 @@ jobs:
       run: echo '${{ toJson(github.event) }}'
 
     - name: Add a comment
-    - uses: actions/github-script@v3
+      uses: actions/github-script@v3
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
