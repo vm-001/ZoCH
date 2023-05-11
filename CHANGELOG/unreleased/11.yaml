@@ -1,3 +1,3 @@
 pr: 11
-message: ci: add changelog workflow
+message: "ci: add changelog workflow"
 type: fixed
