@@ -19,10 +19,10 @@ jobs:
         bin/changelog add -f ${{ github.event.number }} -m "${{ github.event.pull_request.title }}" -t fixed
 
     - name: Commit and push
-      run: |
+      run:
         git branch
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
         git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
         git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml" --signoff
-        git push origin HEAD:${{ github.ref }}
+        git push
