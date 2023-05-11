@@ -31,3 +31,19 @@ jobs:
         git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
         git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml" --signoff
         git push
+
+    - name: debug
+      run: echo '${{ toJson(github.event) }}'
+
+    - name: Add a comment
+    - uses: actions/github-script@v3
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'I've created a changelog YAML for you.'
+          })
+          
