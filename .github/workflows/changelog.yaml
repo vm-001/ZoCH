@@ -28,6 +28,7 @@ jobs:
         echo "::set-output name=filename::${{ github.event.pull_request.number }}.yaml"
         
         git config --local user.email "$(git log -n 1 --pretty=format:%ae)"
+        git config --local user.name "$(git log -n 1 --pretty=format:%an)"
         git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
         git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml"
         git push
