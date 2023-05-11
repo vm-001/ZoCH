@@ -1,0 +1,62 @@
+name: Changelog
+
+on:
+  pull_request
+
+jobs:
+  add-changelog:
+    name: Add changelog
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Add changelog file
+      run: |
+        ls
+        bin/changelog add -f ${{ github.event.number }} -m "${{ github.event.pull_request.title }}" -t fixed
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
+        git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml" --signoff
+        git push
+#
+#  check:
+#    name: Auto
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # https://github.com/actions/checkout/releases/tag/v3.1.0
+#
+#      - name: Use Node.js ${{ env.NODE_VERSION }}
+#        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # https://github.com/actions/setup-node/releases/tag/v3.5.1
+#        with:
+#          node-version: ${{ env.NODE_VERSION }}
+#          cache: 'npm'
+#
+#      - name: Install dependencies
+#        run: npm ci --no-audit
+#
+#      - name: Assert that a new changelog was added, or that the check is skipped
+#        env:
+#          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: node .github/scripts/check-changelog
+#
+#      - name: Check that all changelogs are valid
+#        run: bin/changelog consume --date 2050-01-01 --dry-run
+#
+#  check2:
+#    name:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      pull-requests: write
+#    steps:
+#      -
+#      - uses: mshick/add-pr-comment@v2
+#        with:
+#          message: |
+#            **Hello**
+#            🌏
+#            !
