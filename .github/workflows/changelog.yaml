@@ -2,6 +2,7 @@ name: Changelog
 
 on:
   pull_request:
+    types: [ "opened" ]
 
 jobs:
   add-changelog:
@@ -22,7 +23,7 @@ jobs:
     - name: Add changelog file
       run: |
         git branch
-        bin/changelog add -f ${{ github.event.number }} -m "${{ github.event.pull_request.title }}" -t fixed
+        bin/changelog add -f ${{ github.event.pull_request.number }} -m "${{ github.event.pull_request.title }}" -t fixed
 
     - name: Commit and push
       run: |
