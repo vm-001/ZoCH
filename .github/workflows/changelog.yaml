@@ -22,4 +22,4 @@ jobs:
         git config --local user.name "GitHub Actions"
         git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
         git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml" --signoff
-        git push
+        git push origin HEAD:${{ github.ref }}
