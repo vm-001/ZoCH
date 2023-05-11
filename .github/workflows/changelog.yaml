@@ -1,0 +1,25 @@
+name: Changelog
+
+on:
+  pull_request
+
+jobs:
+  add-changelog:
+    name: Add changelog
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Add changelog file
+      run: |
+        ls
+        bin/changelog add -f ${{ github.event.number }} -m "${{ github.event.pull_request.title }}" -t fixed
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add CHANGELOG/unreleased/${{ github.event.number }}.yaml
+        git commit -m "Add changelog file CHANGELOG/unreleased/${{ github.event.number }}.yaml" --signoff
+        git push
